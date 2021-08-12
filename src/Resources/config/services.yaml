@@ -1,0 +1,10 @@
+services:
+  Openforce\Select2Bundle\Form\Select2Type:
+    tags:
+      - "form.type"
+    arguments:
+      - "@doctrine"
+      - "@request_stack"
+      - "@security.authorization_checker"
+    public: true
+

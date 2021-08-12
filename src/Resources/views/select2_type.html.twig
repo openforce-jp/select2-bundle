@@ -1,0 +1,16 @@
+{% block openforce_select2_widget %}
+    {{ form_widget(form) }}
+    <script type="text/javascript">
+        $('#{{ form.vars.id }}').select2({
+            ajax: {
+                url: "{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}",
+                dataType: 'json',
+                data: function (params) {
+                    params._openforce_select2_request = "{{ form.vars.field_key }}";
+                    params.name = "{{ form.vars.name }}";
+                    return params;
+                }
+            }
+        });
+    </script>
+{% endblock %}
