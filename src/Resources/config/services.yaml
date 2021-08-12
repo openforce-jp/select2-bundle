@@ -5,6 +5,5 @@ services:
     arguments:
       - "@doctrine"
       - "@request_stack"
-      - "@security.authorization_checker"
     public: true
 
