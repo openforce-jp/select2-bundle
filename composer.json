@@ -2,6 +2,7 @@
     "name":"openforce/select2-bundle",
     "description":"symfony select2 entity form type",
     "type":"symfony-bundle",
+    "license": "MIT",
     "require": {
         "php": ">=7.0.8",
         "symfony/form": "^3.4|^4.0|^5.0",
