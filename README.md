@@ -41,10 +41,7 @@ return [
 
 ```yaml
 twig:
-    
-    #append this parameters
-    paths:
-        '%kernel.project_dir%/vendor/openforce/select2-bundle/src/Resources/views': OpenforceSelect2    
+
     form_themes:
         - "@OpenforceSelect2/select2_type.html.twig"
 ```
