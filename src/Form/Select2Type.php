@@ -3,7 +3,6 @@ namespace Openforce\Select2Bundle\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -25,7 +24,7 @@ class Select2Type extends EntityType
     /**
      * 
      */
-    public function __construct(ManagerRegistry $registry, $requestStack)
+    public function __construct($registry, $requestStack)
     {
         self::$field_id_num++;
         $this->request = $requestStack->getCurrentRequest();
