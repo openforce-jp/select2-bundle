@@ -66,21 +66,25 @@ The main options are:
 - `choice_label` Optional. Entity field name you want to display on the label. default value is `__toString`.
 - `max_results` Optional. Number to display on page.
 - `filter` Optional. It is callback function. If you use this, you don't need to define `search_field`.
+- `related_fields` Optional. This option allows you to use the values you enter in other fields with the `filter` option.
 
 ```php
 // your Controller file
     public function index(){
 
         $formBuildr = $this->createFormBuilder();
+        $formBuilder->add('price', InputType::class);
         $formBuilder->add("product", Select2Type::class,[
             'class' => Product::class, 
             'search_field' => 'name', 
             'choice_label' => 'name',
             'max_results' => 50, 
-            'filter' => function(EntityRepository $er, $value){
+            'related_fields' => ['price'],
+            'filter' => function(EntityRepository $er, $value, $relatedFields){
                 return $er->createQueryBuilder("p")
-                    ->where("p.description like :word")
+                    ->where("p.description like :word and p.price < :price")
                     ->setParameter("word", "%".$value."%")
+                    ->setParameter('price', $relatedFields['price'])
                     ->orderBy("p.productId")
                     ;
             }

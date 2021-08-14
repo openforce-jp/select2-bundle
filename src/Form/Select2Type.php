@@ -46,6 +46,7 @@ class Select2Type extends EntityType
             $this->renderJsonResponse($view->vars['choices'], $options);
         }
 
+        $view->vars['related_fields'] = $options['related_fields'];
         $view->vars['field_key'] = $this->getFieldKey($options);
     }
 
@@ -75,10 +76,11 @@ class Select2Type extends EntityType
         $request = $this->request;
         parent::configureOptions($resolver);
         $resolver->setDefaults([
+            'related_fields' => [],
             'field_key' => null,
             'search_field' => null,
             'max_results' => 50,
-            'filter' => function(EntityRepository $er, $word, $options){
+            'filter' => function(EntityRepository $er, $word, $relatedFields, $options){
                 $queryBuilder = $er->createQueryBuilder("a");
 
                 if(!$options['search_field'])
@@ -95,7 +97,7 @@ class Select2Type extends EntityType
 
         $queryBuilderNormalizer = function (Options $options, $queryBuilder) use($request) {
             $er = $options['em']->getRepository($options['class']);
-            $qb = $options['filter']($er, $request->get("term"), $options);
+            $qb = $options['filter']($er, $request->get("term"), $request->get('related_fields'), $options);
             /** @var QueryBuilder $qb */
             $start = $options['max_results'] * $request->get("page", 1) - $options['max_results'];
             $qb->setFirstResult($start)

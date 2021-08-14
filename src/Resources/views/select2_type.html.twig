@@ -8,6 +8,11 @@
                 data: function (params) {
                     params._openforce_select2_request = "{{ form.vars.field_key }}";
                     params.name = "{{ form.vars.name }}";
+                    params.related_fields = {};
+                    {% for f in form.vars.related_fields %}
+                            params.related_fields.{{ f }} = $("#{{ attribute(form.parent, f).vars.id }}").val();
+                    {% endfor %}
+
                     return params;
                 }
             }
