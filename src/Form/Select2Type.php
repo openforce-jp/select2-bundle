@@ -91,7 +91,10 @@ class Select2Type extends EntityType
         
         foreach($qb->getQuery()->getResult() as $v)
         {
-            if($meta->hasField($options['choice_label']))
+            if( !isset($options['choice_label']) or !$options['choice_label'] )
+            {
+                $label = (string)$v;
+            }elseif($meta->hasField($options['choice_label']))
             {
                 $label = $meta->getFieldValue($v, $options['choice_label']);
             }else{
