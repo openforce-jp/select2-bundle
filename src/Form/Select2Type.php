@@ -94,6 +94,9 @@ class Select2Type extends EntityType
             if( !isset($options['choice_label']) or !$options['choice_label'] )
             {
                 $label = (string)$v;
+            }elseif(is_array($options['choice_label']))
+            {
+                $label = call_user_func($options['choice_label'], $v);
             }elseif($meta->hasField($options['choice_label']))
             {
                 $label = $meta->getFieldValue($v, $options['choice_label']);
