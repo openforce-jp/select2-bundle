@@ -163,9 +163,13 @@ class Select2Type extends EntityType
             $er = $options['em']->getRepository($options['class']);
             $qb = $options['filter']($er, $request->get("term"), $request->get('related_fields'), $options);
             /** @var QueryBuilder $qb */
-            $start = $options['max_results'] * $request->get("page", 1) - $options['max_results'];
-            $qb->setFirstResult($start)
-                ->setMaxResults($options['max_results']);
+            if($this->request->get("_openforce_select2_request") === $this->getFieldKey((array)$options))
+            {
+                $start = $options['max_results'] * $request->get("page", 1) - $options['max_results'];
+                $qb->setFirstResult($start)
+                    ->setMaxResults($options['max_results']);
+            }
+
             
             return $qb;
         };
