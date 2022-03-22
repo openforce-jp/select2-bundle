@@ -51,6 +51,9 @@ class Select2Type extends EntityType
         if($this->request->get("_openforce_select2_request") === $this->getFieldKey($options))
         {
             $this->renderJsonResponse($view->vars['choices'], $options);
+        }elseif($this->request->get("_openforce_select2_request") !== null)
+        {
+            return;
         }
 
         $view->vars['related_fields'] = $options['related_fields'];
